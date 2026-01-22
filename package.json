@@ -1,0 +1,44 @@
+{
+  "name": "vexor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:generate": "npx drizzle-kit generate",
+    "db:push": "npx drizzle-kit push",
+    "db:studio": "npx drizzle-kit studio",
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:pull": "npx drizzle-kit pull"
+  },
+  "dependencies": {
+    "@fontsource/rubik": "^5.2.8",
+    "@heroicons/react": "^2.2.0",
+    "@neondatabase/serverless": "^1.0.2",
+    "@telegram-apps/sdk": "^3.11.8",
+    "@types/ws": "^8.18.1",
+    "chart.js": "^4.5.1",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.45.1",
+    "localforage": "^1.10.0",
+    "next": "16.1.4",
+    "pg": "^8.17.2",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "tailwind-merge": "^3.4.0",
+    "tailwind-variants": "^3.2.2",
+    "uuidv7": "^1.1.0",
+    "ws": "^8.19.0",
+    "zustand": "^5.0.10"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
