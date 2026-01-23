@@ -1,4 +1,4 @@
-import { XMarkIcon, CheckIcon } from "@heroicons/react/24/solid";
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 export default function Page() {
@@ -18,6 +18,8 @@ export default function Page() {
         >
           <XMarkIcon className="size-6 text-neutral-400" />
         </Link>
+
+        <p>{new Date().toLocaleString()}</p>
       </div>
 
       {/* Question */}
@@ -28,9 +30,7 @@ export default function Page() {
           Название вопроса
         </h1>
 
-        <p className="pt-2 text-sm text-neutral-300">
-          Описание вопроса и практика
-        </p>
+        <p className="pt-2 text-sm ">Описание вопроса и практика</p>
       </div>
 
       {/* Answers */}
@@ -55,8 +55,8 @@ export default function Page() {
         >
           <span
             className="
-              size-6
-              mt-1
+              size-12
+              
               rounded-full
               border
               border-neutral-400
@@ -91,7 +91,7 @@ export default function Page() {
         >
           <span
             className="
-              size-6
+              size-10
               mt-1
               rounded-full
               bg-neutral-800
@@ -101,7 +101,7 @@ export default function Page() {
               pointer-events-none
             "
           >
-            <CheckIcon className="size-4 text-[#36F79A]" />
+            <CheckIcon className="size-10 text-[#36F79A]" />
           </span>
 
           <p className="font-light">
@@ -151,11 +151,13 @@ export default function Page() {
       </div>
 
       {/* Next */}
-      <Link
-        href="/practice"
-        className="
-          mt-auto
-          w-full
+      <div className="flex place-content-center">
+        {" "}
+        <Link
+          href="/practice"
+          className="
+          
+          px-12
           py-6
           text-center
           font-medium
@@ -165,9 +167,10 @@ export default function Page() {
           transition
           active:scale-95
         "
-      >
-        Следующий вопрос
-      </Link>
+        >
+          Следующий вопрос
+        </Link>
+      </div>
     </div>
   );
 }

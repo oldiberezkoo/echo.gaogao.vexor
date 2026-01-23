@@ -23,7 +23,7 @@
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
     "localforage": "^1.10.0",
-    "next": "16.1.4",
+    "next": "16.1.0`",
     "pg": "^8.17.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -42,3 +42,4 @@
     "typescript": "^5"
   }
 }
+
