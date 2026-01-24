@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  @apply max-w-[560px] mx-auto min-h-dvh text-[#9B9B9D]   bg-[#191919] text-[14px] border;
+  @apply max-w-[560px] mx-auto min-h-dvh text-[#9B9B9D]   bg-[#191919] text-[14px];
 }
 
 * {
