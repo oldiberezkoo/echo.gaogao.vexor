@@ -1,173 +1,50 @@
-import { XMarkIcon, CheckIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
+import { AcademicCapIcon, BeakerIcon } from "@heroicons/react/24/outline";
 
-export default function Page() {
+export default function Home() {
   return (
     <div className="w-full h-full py-6 px-4 flex flex-col gap-6">
-      {/* Header */}
+      {" "}
+      {/* Header */}{" "}
       <div className="flex flex-row w-full items-center justify-between">
-        <Link
-          href="/practice"
-          className="
-            p-2
-            bg-neutral-800
-            rounded-full
-            xanimate
-            active:scale-90
-          "
-        >
-          <XMarkIcon className="size-6 text-neutral-400" />
-        </Link>
-      </div>
-
-      {/* Question */}
-      <div className="flex flex-col gap-2 font-sans">
-        <span className="text-sm text-neutral-400">0 / 10</span>
-
-        <h1 className="text-[26px] leading-7 font-medium text-[#36F79A]">
-          Название вопроса
-        </h1>
-
-        <p className="pt-2 text-sm text-neutral-300">
-          Описание вопроса и практика
-        </p>
-      </div>
-
-      {/* Answers */}
-      <div className="flex flex-col gap-1">
-        {/* Default */}
-        <button
-          className="
-            w-full
-            flex
-            gap-3
-            items-start
-            px-4
-            py-6
-            bg-neutral-800
-            rounded-4xl
-            text-left
-            transition
-            hover:bg-[#36F79A]
-            hover:text-neutral-800
-            active:scale-95
-          "
-        >
-          <span
-            className="
-              size-6
-              mt-1
-              rounded-full
-              border
-              border-neutral-400
-              flex
-              items-center
-              justify-center
-              pointer-events-none
-            "
-          />
-          <p className="font-light">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Exercitationem error quisquam explicabo similique voluptatem!
-          </p>
-        </button>
-
-        {/* Correct */}
-        <button
-          className="
-            w-full
-            flex
-            gap-3
-            items-start
-            px-4
-            py-6
-            bg-[#36F79A]
-            text-neutral-800
-            rounded-4xl
-            text-left
-            transition
-            active:scale-95
-          "
-        >
-          <span
-            className="
-              size-6
-              mt-1
-              rounded-full
-              bg-neutral-800
-              flex
-              items-center
-              justify-center
-              pointer-events-none
-            "
-          >
-            <CheckIcon className="size-4 text-[#36F79A]" />
-          </span>
-
-          <p className="font-light">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Exercitationem error quisquam explicabo similique voluptatem!
-          </p>
-        </button>
-
-        {/* Wrong */}
-        <div className="flex flex-col gap-2">
-          <button
-            className="
-              w-full
-              flex
-              gap-3
-              items-start
-              px-4
-              py-6
-              bg-[#ED0A35]
-              text-white
-              rounded-4xl
-              text-left
-              transition
-              active:scale-95
-            "
-          >
-            <span
-              className="
-                size-6
-                mt-1
-                rounded-full
-                border
-                border-white
-                pointer-events-none
-              "
-            />
-            <p className="font-light">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Exercitationem error quisquam explicabo similique voluptatem!
-            </p>
-          </button>
-
-          <p className="px-6 text-sm text-neutral-300">
-            * Lorem ipsum dolor sit amet consectetur.
-          </p>
-        </div>
-      </div>
-
-      {/* Next */}
-      <Link
-        href="/practice"
-        className="
-          mt-auto
-          w-full
-          py-6
-          text-center
-          font-medium
-          bg-[#50EBFF]
-          text-neutral-800
-          rounded-full
-          transition
-          active:scale-95
-        "
-      >
-        Следующий вопрос
-      </Link>
+        {" "}
+        {/* Title */}{" "}
+        <span className="text-xl text-white flex leading-tight gap-0.5">
+          {" "}
+          echo.gao.inside{" "}
+          <span className="text-[10px] text-neutral-400 tracking-wide items-start justify-start">
+            {" "}
+            powered by Danil T.{" "}
+          </span>{" "}
+        </span>{" "}
+        {/* Info block: developer contact */} {/* Icon */}{" "}
+        <div className="p-2 bg-neutral-800 rounded-full">
+          {" "}
+          <BeakerIcon className="size-6 text-neutral-400" />{" "}
+        </div>{" "}
+      </div>{" "}
+      {/* Intro */}{" "}
+      <div className="flex flex-col items-start font-sans leading-7 text-[26px]">
+        {" "}
+        <h1 className="text-white">Проверьте свои знания</h1>{" "}
+        <p className="">выберите</p> <p className="">подходящий блок</p>{" "}
+      </div>{" "}
+      {/* Grid */}{" "}
+      <div className="grid grid-cols-2 gap-1 w-full">
+        {" "}
+        {Array(10)
+          .fill(0)
+          .map((_, i) => (
+            <a
+              href="/block"
+              key={i}
+              className=" py-5 w-full flex flex-col items-center justify-center gap-1 bg-neutral-800 rounded-4xl transition active:scale-95 "
+            >
+              {" "}
+              <AcademicCapIcon className="size-8 " />{" "}
+              <h1 className="font-sans font-light">Умение</h1>{" "}
+            </a>
+          ))}{" "}
+      </div>{" "}
     </div>
   );
 }
