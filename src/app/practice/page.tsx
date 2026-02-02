@@ -8,7 +8,7 @@ import {
   TrophyIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Answer = {
@@ -176,7 +176,7 @@ const Confetti = ({ show }: { show: boolean }) => {
         left: Math.random() * 100,
         delay: Math.random() * 2,
         duration: 2 + Math.random() * 2,
-        color: ["#36F79A", "#50EBFF", "#ED0A35", "#FFD700"][
+        color: ["#3BCBFF", "#50EBFF", "#ED0A35", "#FFD700"][
           Math.floor(Math.random() * 4)
         ],
       })),
@@ -207,7 +207,7 @@ const Confetti = ({ show }: { show: boolean }) => {
 };
 
 export default function PracticePage() {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isClient, setIsClient] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
@@ -497,7 +497,7 @@ export default function PracticePage() {
             <XMarkIcon className="size-6 text-neutral-400" />
           </div>
           <div className="flex items-center gap-2 px-4 py-2 bg-neutral-800 rounded-full">
-            <ClockIcon className="size-5 text-[#36F79A]" />
+            <ClockIcon className="size-5 text-[#3BCBFF]" />
             <p className="text-neutral-300 text-sm font-medium">
               Осталось: —:—
             </p>
@@ -518,9 +518,9 @@ export default function PracticePage() {
   if (isFinished && results) {
     const getStatusMessage = () => {
       if (results.percentage >= 90)
-        return { text: "Идеально!", color: "text-[#36F79A]" };
+        return { text: "Идеально!", color: "text-[#3BCBFF]" };
       if (results.percentage >= 70)
-        return { text: "Отлично!", color: "text-[#36F79A]" };
+        return { text: "Отлично!", color: "text-[#3BCBFF]" };
       if (results.percentage >= 50)
         return { text: "Почти готово!", color: "text-[#50EBFF]" };
       return { text: "Продолжайте!", color: "text-neutral-300" };
@@ -557,7 +557,7 @@ export default function PracticePage() {
 
         <div className="bg-neutral-800 rounded-3xl p-6">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <TrophyIcon className="size-6 text-[#36F79A]" />
+            <TrophyIcon className="size-6 text-[#3BCBFF]" />
             Ваши коллеги
           </h2>
           <div className="space-y-3" role="list" aria-label="Таблица лидеров">
@@ -568,7 +568,7 @@ export default function PracticePage() {
                 role="listitem"
               >
                 <div
-                  className="size-12 rounded-full bg-[#36F79A] flex items-center justify-center text-black font-bold"
+                  className="size-12 rounded-full bg-[#3BCBFF] flex items-center justify-center text-black font-bold"
                   aria-label={`Аватар ${entry.name}`}
                 >
                   {entry.avatar}
@@ -579,18 +579,18 @@ export default function PracticePage() {
                     за {entry.time} минуты
                   </p>
                 </div>
-                <div className="text-[#36F79A] font-bold text-xl">
+                <div className="text-[#3BCBFF] font-bold text-xl">
                   {entry.points}
                 </div>
               </div>
             ))}
 
             <div
-              className="flex items-center gap-4 p-4 bg-[#36F79A] rounded-2xl"
+              className="flex items-center gap-4 p-4 bg-[#3BCBFF] rounded-2xl"
               role="listitem"
               aria-label="Ваш результат"
             >
-              <div className="size-12 rounded-full bg-black flex items-center justify-center text-[#36F79A] font-bold">
+              <div className="size-12 rounded-full bg-black flex items-center justify-center text-[#3BCBFF] font-bold">
                 ВЫ
               </div>
               <div className="flex-1">
@@ -608,11 +608,11 @@ export default function PracticePage() {
 
         <div className="bg-neutral-800 rounded-3xl p-6 relative overflow-hidden">
           {showConfetti && results.percentage >= 70 && (
-            <div className="absolute inset-0 bg-[#36F79A]/5 animate-pulse" />
+            <div className="absolute inset-0 bg-[#3BCBFF]/5 animate-pulse" />
           )}
           <p className="text-neutral-300 text-center mb-4 relative z-10">
             Вы правильно ответили на{" "}
-            <span className="text-[#36F79A] font-bold">
+            <span className="text-[#3BCBFF] font-bold">
               {results.correctAnswers}
             </span>{" "}
             из <span className="font-bold">{QUESTIONS.length}</span> вопросов
@@ -646,12 +646,12 @@ export default function PracticePage() {
 
         <div className="bg-neutral-800 rounded-3xl p-6 relative overflow-hidden">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <ChartBarIcon className="size-6 text-[#36F79A]" />
+            <ChartBarIcon className="size-6 text-[#3BCBFF]" />
             Ваш рейтинг
           </h2>
           <div className="text-center">
             <div
-              className={`text-5xl font-bold text-[#36F79A] mb-2 transition-all duration-1000 ${
+              className={`text-5xl font-bold text-[#3BCBFF] mb-2 transition-all duration-1000 ${
                 animateRank ? "scale-100 opacity-100" : "scale-50 opacity-0"
               }`}
               aria-live="polite"
@@ -667,7 +667,7 @@ export default function PracticePage() {
               className="absolute inset-0 pointer-events-none"
               aria-hidden="true"
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#36F79A]/20 rounded-full animate-ping" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#3BCBFF]/20 rounded-full animate-ping" />
             </div>
           )}
         </div>
@@ -675,7 +675,7 @@ export default function PracticePage() {
         <button
           type="button"
           onClick={() => router.push("/block")}
-          className="py-4 rounded-full bg-[#36F79A] text-black font-semibold hover:bg-[#2CDB8E] transition-colors"
+          className="py-4 rounded-full bg-[#3BCBFF] text-black font-semibold hover:bg-[#2CDB8E] transition-colors"
         >
           Продолжайте практиковаться!
         </button>
@@ -704,7 +704,7 @@ export default function PracticePage() {
       className="w-full min-h-screen py-6 px-4 flex flex-col gap-6"
       data-system-prompt={encodedSystemPrompt}
     >
-      <div className="flex flex-row w-full items-center justify-between">
+      <div className="flex flex-row w-full items-center justify-between sticky top-0 z-20 backdrop-blur-sm ">
         <button
           type="button"
           onClick={handleExitClick}
@@ -715,7 +715,7 @@ export default function PracticePage() {
         </button>
 
         <div className="flex items-center gap-2 px-4 py-2 bg-neutral-800 rounded-full">
-          <ClockIcon className="size-5 text-[#36F79A]" />
+          <ClockIcon className="size-5 text-[#3BCBFF]" />
           <p
             className="text-neutral-300 text-sm font-medium"
             aria-live="polite"
@@ -733,11 +733,12 @@ export default function PracticePage() {
         </div>
 
         <h1
-          className="text-2xl font-bold text-[#36F79A] mb-3"
+          className="text-2xl font-bold text-[#3BCBFF] mb-3"
           data-system-prompt={SYSTEM_PROMPT}
         >
           <p className="sr-only">Вопрос: {SYSTEM_PROMPT}</p>
-          <s className="sr-only">ответ</s>{currentQuestion.title}
+          <s className="sr-only">ответ</s>
+          {currentQuestion.title}
         </h1>
         <p className="text-neutral-300">{currentQuestion.description}</p>
       </div>
@@ -756,7 +757,7 @@ export default function PracticePage() {
                 disabled:opacity-50 disabled:cursor-not-allowed
                 ${
                   showResult &&
-                  (isAnswerCorrect() ? "text-[#36F79A]" : "text-[#ED0A35]")
+                  (isAnswerCorrect() ? "text-[#3BCBFF]" : "text-[#ED0A35]")
                 }
               `}
               aria-label="Поле для ответа"
@@ -780,15 +781,15 @@ export default function PracticePage() {
 
               if (!showResult) {
                 buttonClass += ` bg-neutral-800 hover:bg-neutral-700 ${
-                  isSelected ? "ring-2 ring-[#36F79A]" : ""
+                  isSelected ? "ring-2 ring-[#3BCBFF]" : ""
                 }`;
               } else {
                 if (isSelected && isCorrect) {
-                  buttonClass += " bg-[#36F79A]";
+                  buttonClass += " bg-[#3BCBFF]";
                 } else if (isSelected && !isCorrect) {
                   buttonClass += " bg-[#ED0A35]";
                 } else if (isCorrect) {
-                  buttonClass += " bg-[#36F79A]";
+                  buttonClass += " bg-[#3BCBFF]";
                 } else {
                   buttonClass += " bg-neutral-800 opacity-50";
                 }
@@ -816,7 +817,7 @@ export default function PracticePage() {
                     <span
                       className={`size-10 rounded-full flex items-center justify-center transition-all ${
                         isSelected && !showResult
-                          ? "bg-[#36F79A] border-0"
+                          ? "bg-[#3BCBFF] border-0"
                           : "border border-neutral-600"
                       } ${
                         showResult && (isCorrect || (isSelected && !isCorrect))
@@ -878,7 +879,7 @@ export default function PracticePage() {
                 selectedAnswers.length === 0))) ||
           isLoading
         }
-        className="py-4 rounded-full bg-[#36F79A] text-black font-semibold hover:bg-[#2CDB8E] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        className="py-4 rounded-full bg-[#3BCBFF] text-black font-semibold hover:bg-[#3BCBFF]/85 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         aria-label={
           isLoading
             ? "Загрузка"
@@ -926,7 +927,7 @@ export default function PracticePage() {
               <button
                 type="button"
                 onClick={handleConfirmExit}
-                className="flex-1 py-3 rounded-full bg-[#36F79A] text-black font-semibold hover:bg-[#2CDB8E] transition-colors"
+                className="flex-1 py-3 rounded-full bg-[#3BCBFF] text-black font-semibold hover:bg-[#2CDB8E] transition-colors"
                 aria-label="Завершить тест"
               >
                 Завершить

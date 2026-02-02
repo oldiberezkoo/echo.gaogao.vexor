@@ -1,5 +1,5 @@
 import { AcademicCapIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 /**
  * Название и описание блока ("Вино: Основы и регионы") взяты из practice/page.tsx:
@@ -34,7 +34,7 @@ export default function Page() {
       </div>
       {/* Grid */}
       <div className="flex flex-col gap-0.5">
-        <div className="grid grid-cols-2 gap-1 w-full">
+        <div className="grid  sm:grid-cols-2  grid-cols-1 gap-1 w-full">
           {[
             "Сорта винограда",
             "Типы вин",
@@ -47,7 +47,9 @@ export default function Page() {
               className="py-8 w-full flex flex-col items-center justify-center gap-1 hover:bg-[#36F79A] hover:text-neutral-800 bg-neutral-800 rounded-4xl transition active:scale-95"
             >
               <AcademicCapIcon className="size-8" />
-              <h1 className="font-sans font-light">{label}</h1>
+              <h1 className="text-sm font-light text-nowrap text-center">
+                {label}
+              </h1>
             </Link>
           ))}
         </div>

@@ -8,6 +8,7 @@ import {
   TrophyIcon,
 } from "@heroicons/react/24/outline";
 import Chart from "chart.js/auto";
+import { useTransitionRouter } from "next-view-transitions";
 import { useEffect, useRef, useState } from "react";
 const USER_DATA = {
   firstName: "₹ᴏʟᴅɪʙᴇʀᴇᴢᴋᴏ",
@@ -215,6 +216,7 @@ function ActivityChart() {
 }
 
 export default function ProfilePage() {
+  const router = useTransitionRouter();
   const [activeTab, setActiveTab] = useState("stats");
 
   return (
@@ -222,7 +224,7 @@ export default function ProfilePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <button
-          onClick={() => window.history.back()}
+          onClick={() => router.back()}
           className="p-2 bg-neutral-800 rounded-full active:scale-90 transition"
         >
           <ArrowLeftIcon className="size-6 text-neutral-400" />
