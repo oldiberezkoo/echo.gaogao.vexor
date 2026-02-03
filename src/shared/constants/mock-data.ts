@@ -197,7 +197,7 @@ export const PRACTICE_QUESTIONS: Question[] = [
     description: "Выберите правильный вариант.",
     points: 1,
     topic: "Виноградные сорта",
-    topicLink: "https://gaoinside.netlify.app/",
+    topicLink: "https://netlify.app/",
     answers: [
       {
         id: 1,
@@ -232,7 +232,7 @@ export const PRACTICE_QUESTIONS: Question[] = [
     description: "Выберите все правильные варианты.",
     points: 1,
     topic: "Типы вин",
-    topicLink: "https://gaoinside.netlify.app/",
+    topicLink: "https://netlify.app/",
     answers: [
       { id: 5, text: "Мерло", isCorrect: true },
       {
@@ -260,7 +260,7 @@ export const PRACTICE_QUESTIONS: Question[] = [
     correctText: "шампанизация",
     points: 3,
     topic: "Игристые вина",
-    topicLink: "https://gaoinside.netlify.app/",
+    topicLink: "https://netlify.app/",
   },
   {
     id: 4,
@@ -269,7 +269,7 @@ export const PRACTICE_QUESTIONS: Question[] = [
     description: "Выберите правильный вариант.",
     points: 1,
     topic: "Винные регионы",
-    topicLink: "https://gaoinside.netlify.app/",
+    topicLink: "https://netlify.app/",
     answers: [
       {
         id: 10,
