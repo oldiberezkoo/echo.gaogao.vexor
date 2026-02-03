@@ -102,9 +102,10 @@ export const MOCK_LEADERBOARD: LeaderboardEntry[] = [
  */
 export const MOCK_USER_DATA: UserProfile = {
   firstName: "₹ᴏʟᴅɪʙᴇʀᴇᴢᴋᴏ",
+  username: "oldiberezko",
   lastName: "",
   avatar:
-    "https://cdn4.telesco.pe/file/nW3q8DT8mU3MxAOHK5AMSQo1mvVUwqTBfvVV5RyACnyCLwuwjj5XL_ygbj-JNAx3vjQuTDddWDGw6zhhS5aezhPAOU5-B4nnhGRpEt7otS1-zijT2_pMIT053H_oMjO1VIw9O4NfoP1DbSXUfQsRFEju0Cmy2hdHcZcIuSGzfbNfh-tcw1Z67k8r4lDCewIqUAW4iYRN6nUEZAXr7p7zGZA2vKy-CjnyzVFGd2ptglDPO7oSeu4D9OttB3IEZC_HiShlsSZkPc3Tg11_nO1QQczx97O6OGZgCzQKMxpzHIvckalgwevEqSxK01sYQMUDkuXPX4XWDekgyn7YkbtTug.jpg",
+    "https://k7rxwdfegh.ufs.sh/f/iPXDxxHekoTcJKtzarWjtobF20URQNYih8Tl97g1IDw36rKG",
   status: "*̷* Его надо запомнить.",
   position: "gaogao.inside.dev",
   experience: "4 года 3 месяца",
@@ -159,20 +160,20 @@ export const KNOWLEDGE_BLOCKS = [
  * Activity data for bar chart
  */
 export const ACTIVITY_DATA = [
-  { date: "13.01", tasks: 5 },
-  { date: "14.01", tasks: 8 },
-  { date: "15.01", tasks: 3 },
-  { date: "16.01", tasks: 12 },
-  { date: "17.01", tasks: 7 },
-  { date: "18.01", tasks: 4 },
-  { date: "19.01", tasks: 9 },
-  { date: "20.01", tasks: 6 },
-  { date: "21.01", tasks: 11 },
-  { date: "22.01", tasks: 8 },
-  { date: "23.01", tasks: 5 },
-  { date: "24.01", tasks: 13 },
-  { date: "25.01", tasks: 7 },
-  { date: "26.01", tasks: 10 },
+  { date: "13.01", tasks: 5, points: 150 },
+  { date: "14.01", tasks: 8, points: 240 },
+  { date: "15.01", tasks: 3, points: 90 },
+  { date: "16.01", tasks: 12, points: 360 },
+  { date: "17.01", tasks: 7, points: 210 },
+  { date: "18.01", tasks: 4, points: 120 },
+  { date: "19.01", tasks: 9, points: 270 },
+  { date: "20.01", tasks: 6, points: 180 },
+  { date: "21.01", tasks: 11, points: 330 },
+  { date: "22.01", tasks: 8, points: 240 },
+  { date: "23.01", tasks: 5, points: 150 },
+  { date: "24.01", tasks: 13, points: 390 },
+  { date: "25.01", tasks: 7, points: 210 },
+  { date: "26.01", tasks: 10, points: 300 },
 ];
 
 /**

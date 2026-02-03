@@ -3,6 +3,7 @@
 import { AVAILABLE_ICONS, PRESET_COLORS } from "@/shared/constants";
 import { Modal } from "@/shared/ui/organisms/Modal";
 import * as HeroIcons from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
 /**
@@ -15,7 +16,13 @@ interface LabelEditModalProps {
   initialLabel?: string;
   initialIcon?: string;
   initialColor?: string;
-  onSave?: (label: string, icon: string, color: string) => void;
+  initialIsVisible?: boolean;
+  onSave?: (
+    label: string,
+    icon: string,
+    color: string,
+    isVisible: boolean,
+  ) => void;
   onDelete?: () => void;
 }
 
@@ -38,12 +45,14 @@ export function LabelEditModal({
   initialLabel = "",
   initialIcon = "AcademicCapIcon",
   initialColor = "#3BCBFF",
+  initialIsVisible = true,
   onSave,
   onDelete,
 }: LabelEditModalProps) {
   const [label, setLabel] = useState(initialLabel);
   const [selectedIcon, setSelectedIcon] = useState(initialIcon);
   const [selectedColor, setSelectedColor] = useState(initialColor);
+  const [isVisible, setIsVisible] = useState(initialIsVisible);
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [customColor, setCustomColor] = useState(initialColor);
 
@@ -53,12 +62,13 @@ export function LabelEditModal({
       setSelectedIcon(initialIcon);
       setSelectedColor(initialColor);
       setCustomColor(initialColor);
+      setIsVisible(initialIsVisible);
       setShowIconPicker(false);
     }
-  }, [isOpen, initialLabel, initialIcon, initialColor]);
+  }, [isOpen, initialLabel, initialIcon, initialColor, initialIsVisible]);
 
   const handleSave = () => {
-    onSave?.(label, selectedIcon, selectedColor);
+    onSave?.(label, selectedIcon, selectedColor, isVisible);
     onClose();
   };
 
@@ -72,6 +82,7 @@ export function LabelEditModal({
     setSelectedIcon(initialIcon);
     setSelectedColor(initialColor);
     setCustomColor(initialColor);
+    setIsVisible(initialIsVisible);
     onClose();
   };
 
@@ -85,6 +96,35 @@ export function LabelEditModal({
 
           {/* Title */}
           <h2 className="text-xl font-bold text-white mb-6">{title}</h2>
+
+          {/* Visibility Toggle */}
+          <div className="flex items-center justify-between p-4 bg-neutral-900 rounded-2xl mb-6">
+            <div className="flex items-center gap-3">
+              <div
+                className={`p-2 rounded-full ${isVisible ? "bg-[#3BCBFF]/10 text-[#3BCBFF]" : "bg-neutral-800 text-neutral-500"}`}
+              >
+                {isVisible ? (
+                  <EyeIcon className="size-6" />
+                ) : (
+                  <EyeSlashIcon className="size-6" />
+                )}
+              </div>
+              <div className="flex flex-col">
+                <span className="text-white font-medium">Доступность</span>
+                <span className="text-neutral-400 text-xs">
+                  {isVisible ? "Блок виден всем" : "Блок скрыт"}
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsVisible(!isVisible)}
+              className={`w-14 h-8 rounded-full p-1 transition-colors ${isVisible ? "bg-[#3BCBFF]" : "bg-neutral-800"}`}
+            >
+              <div
+                className={`w-6 h-6 bg-white rounded-full shadow-md transition-transform ${isVisible ? "translate-x-6" : "translate-x-0"}`}
+              />
+            </button>
+          </div>
 
           {/* Name field */}
           <div className="space-y-2 mb-6">

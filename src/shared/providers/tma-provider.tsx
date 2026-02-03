@@ -7,7 +7,7 @@ import { PropsWithChildren, useEffect, useState } from "react";
 
 function SDKProviderLoading() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen ">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
     </div>
   );
@@ -35,7 +35,7 @@ export function TMAProvider({ children }: PropsWithChildren) {
       } else if (process.env.NODE_ENV === "development") {
         // Mock data for local development
         console.warn(
-          "⚠️ Running in Development mode with MOCKED Telegram data"
+          "⚠️ Running in Development mode with MOCKED Telegram data",
         );
         const mockUser = {
           id: 123456789,

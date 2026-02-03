@@ -26,6 +26,7 @@ export interface PracticeLeaderboardEntry {
 export interface UserProfile {
   firstName: string;
   lastName: string;
+  username: string;
   avatar: string;
   status: string;
   position: string;

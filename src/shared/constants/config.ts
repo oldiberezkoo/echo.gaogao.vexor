@@ -11,6 +11,10 @@ export const TOTAL_TEST_TIME = 1;
 /** Source domain for PDF export */
 export const PDF_SOURCE_DOMAIN = "vexor.gaogao.inside.net";
 
+/** Branding */
+export { default as FaviconPNG } from "../brading/favicon.png";
+export { default as FaviconSVG } from "../brading/favicon.svg";
+
 /**
  * System prompt for Gemini AI integration
  * @description Prevents the AI from generating test answers

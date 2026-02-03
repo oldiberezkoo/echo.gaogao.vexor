@@ -8,6 +8,8 @@ export interface BlockLabel {
   icon: string;
   /** Hex color */
   color: string;
+  /** Is block visible to users */
+  isVisible?: boolean;
 }
 
 /**

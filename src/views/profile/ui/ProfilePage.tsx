@@ -17,10 +17,13 @@ import {
   ACTIVITY_DATA,
   BLOCK_RATINGS,
   KNOWLEDGE_BLOCKS,
+  
   MOCK_USER_DATA,
+  PDF_SOURCE_DOMAIN,
 } from "@/shared/constants";
 
 import { downloadProfilePdf } from "@/features/pdf-export";
+import { SettingsModal } from "@/features/user-settings";
 import { ActivityChart, DoughnutChart } from "@/widgets/charts";
 
 /**
@@ -31,18 +34,33 @@ export function ProfilePage() {
   const router = useTransitionRouter();
   const [activeTab, setActiveTab] = useState("stats");
   const [isExporting, setIsExporting] = useState(false);
-
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [userData, setUserData] = useState(MOCK_USER_DATA);
   const handleExportPdf = async () => {
     setIsExporting(true);
     try {
-      await downloadProfilePdf(MOCK_USER_DATA, BLOCK_RATINGS, {
+      // Generate profile URL for QR code
+      const profileUrl = `${PDF_SOURCE_DOMAIN}/profile/${userData.firstName.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
+
+      await downloadProfilePdf(userData, BLOCK_RATINGS, {
+        includeLogo: true,
         adminNotes: "Экспортировано через панель администратора",
+        activityData: ACTIVITY_DATA,
+        profileUrl: profileUrl,
       });
     } catch (error) {
       console.error("PDF export failed:", error);
     } finally {
       setIsExporting(false);
     }
+  };
+
+  const handleSaveSettings = (data: {
+    firstName: string;
+    lastName: string;
+    position: string;
+  }) => {
+    setUserData((prev) => ({ ...prev, ...data }));
   };
 
   return (
@@ -66,8 +84,11 @@ export function ProfilePage() {
           >
             <DocumentArrowDownIcon className="size-6 text-neutral-400 group-hover:text-neutral-800" />
           </button>
-          <button className="p-2 bg-neutral-800 rounded-full active:scale-90 transition">
-            <Cog6ToothIcon className="size-6 text-neutral-400" />
+          <button
+            onClick={() => setIsSettingsOpen(true)}
+            className="p-2 bg-neutral-800 rounded-full active:scale-90 transition hover:bg-[#3BCBFF] group"
+          >
+            <Cog6ToothIcon className="size-6 text-neutral-400 group-hover:text-neutral-800" />
           </button>
         </div>
       </div>
@@ -77,35 +98,38 @@ export function ProfilePage() {
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <img
-              src={MOCK_USER_DATA.avatar}
-              alt={`${MOCK_USER_DATA.firstName.trim()} ${MOCK_USER_DATA.lastName.trim()}`}
+              src={userData.avatar}
+              alt={`${userData.firstName.trim()} ${userData.lastName.trim()}`}
               className="size-20 rounded-full object-cover"
             />
-            <div className="absolute -bottom-1 -right-1 size-7 bg-[#36F79A] rounded-full flex items-center justify-center border-2 border-neutral-800">
+            <div className="absolute -bottom-1 -right-1 size-7 bg-[#3BCBFF] rounded-full flex items-center justify-center border-2 border-neutral-800">
               <span className="text-black text-xs font-bold">
-                {MOCK_USER_DATA.globalRank}
+                {userData.globalRank}
               </span>
             </div>
           </div>
 
           <div className="flex-1">
-            <h1 className="text-white text-xl font-bold">
-              {MOCK_USER_DATA.firstName} {MOCK_USER_DATA.lastName}
-            </h1>
-            <p className="text-neutral-400 text-sm mt-1">
-              {MOCK_USER_DATA.status}
-            </p>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <h1 className="text-white text-xl font-bold">
+                {userData.firstName} {userData.lastName}
+              </h1>
+              <span className="text-neutral-500 text-sm">
+                @{userData.username}
+              </span>
+            </div>
+            <p className="text-neutral-400 text-sm mt-1">{userData.status}</p>
             <div className="flex items-center gap-4 mt-3">
               <div className="flex items-center gap-1.5">
-                <TrophyIcon className="size-4 text-[#36F79A]" />
+                <TrophyIcon className="size-4 text-[#3BCBFF]" />
                 <span className="text-white text-sm font-semibold">
-                  {MOCK_USER_DATA.totalPoints}
+                  {userData.totalPoints}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
                 <FireIcon className="size-4 text-[#FF6B9D]" />
                 <span className="text-white text-sm font-semibold">
-                  {MOCK_USER_DATA.streak} дней
+                  {userData.streak} дней
                 </span>
               </div>
             </div>
@@ -115,15 +139,11 @@ export function ProfilePage() {
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-neutral-900 rounded-2xl p-3">
             <p className="text-neutral-400 text-xs mb-1">Позиция</p>
-            <p className="text-white font-semibold">
-              {MOCK_USER_DATA.position}
-            </p>
+            <p className="text-white font-semibold">{userData.position}</p>
           </div>
           <div className="bg-neutral-900 rounded-2xl p-3">
             <p className="text-neutral-400 text-xs mb-1">Стаж </p>
-            <p className="text-white font-semibold">
-              {MOCK_USER_DATA.experience}
-            </p>
+            <p className="text-white font-semibold">{userData.experience}</p>
           </div>
         </div>
       </section>
@@ -134,7 +154,7 @@ export function ProfilePage() {
           onClick={() => setActiveTab("stats")}
           className={`flex-1 py-2 rounded-full text-sm font-medium transition ${
             activeTab === "stats"
-              ? "bg-[#36F79A] text-black"
+              ? "bg-[#3BCBFF] text-black"
               : "text-neutral-400"
           }`}
         >
@@ -144,7 +164,7 @@ export function ProfilePage() {
           onClick={() => setActiveTab("activity")}
           className={`flex-1 py-2 rounded-full text-sm font-medium transition ${
             activeTab === "activity"
-              ? "bg-[#36F79A] text-black"
+              ? "bg-[#3BCBFF] text-black"
               : "text-neutral-400"
           }`}
         >
@@ -157,7 +177,7 @@ export function ProfilePage() {
           {/* Block Ratings */}
           <section className="bg-neutral-800 rounded-4xl p-6">
             <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-              <ChartBarIcon className="size-5 text-[#36F79A]" />
+              <ChartBarIcon className="size-5 text-[#3BCBFF]" />
               Рейтинг по блокам
             </h3>
 
@@ -169,7 +189,7 @@ export function ProfilePage() {
                       {block.name}
                     </span>
                     <div className="flex items-center gap-2">
-                      <span className="text-[#36F79A] font-bold">
+                      <span className="text-[#3BCBFF] font-bold">
                         {block.points}
                       </span>
                       <span className="text-neutral-500 text-sm">
@@ -180,7 +200,7 @@ export function ProfilePage() {
 
                   <div className="w-full h-2 bg-neutral-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#36F79A] transition-all duration-500"
+                      className="h-full bg-[#3BCBFF] transition-all duration-500"
                       style={{
                         width: `${(block.points / block.maxPoints) * 100}%`,
                       }}
@@ -248,7 +268,7 @@ export function ProfilePage() {
 
             <div className="grid grid-cols-3 gap-3 mt-6">
               <div className="bg-neutral-900 rounded-2xl p-3 text-center">
-                <p className="text-[#36F79A] text-2xl font-bold">
+                <p className="text-[#3BCBFF] text-2xl font-bold">
                   {ACTIVITY_DATA.reduce((sum, d) => sum + d.tasks, 0)}
                 </p>
                 <p className="text-neutral-400 text-xs mt-1">Всего задач</p>
@@ -299,6 +319,17 @@ export function ProfilePage() {
           </section>
         </>
       )}
+
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        initialData={{
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          position: userData.position,
+        }}
+        onSave={handleSaveSettings}
+      />
     </div>
   );
 }

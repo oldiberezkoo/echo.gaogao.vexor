@@ -44,20 +44,20 @@ export function BlockPage() {
       id: "sub1",
       text: "Сорта винограда",
       icon: "AcademicCapIcon",
-      color: "#36F79A",
+      color: "#3BCBFF",
     },
-    { id: "sub2", text: "Типы вин", icon: "AcademicCapIcon", color: "#36F79A" },
+    { id: "sub2", text: "Типы вин", icon: "AcademicCapIcon", color: "#3BCBFF" },
     {
       id: "sub3",
       text: "Технологии производства",
       icon: "AcademicCapIcon",
-      color: "#36F79A",
+      color: "#3BCBFF",
     },
     {
       id: "sub4",
       text: "Винные регионы",
       icon: "AcademicCapIcon",
-      color: "#36F79A",
+      color: "#3BCBFF",
     },
   ]);
 
@@ -69,11 +69,18 @@ export function BlockPage() {
     setShowEditModal(true);
   };
 
-  const handleSaveBlock = (label: string, icon: string, color: string) => {
+  const handleSaveBlock = (
+    label: string,
+    icon: string,
+    color: string,
+    isVisible: boolean,
+  ) => {
     if (editingBlock) {
       setSubBlocks((prev) =>
         prev.map((b) =>
-          b.id === editingBlock.id ? { ...b, text: label, icon, color } : b,
+          b.id === editingBlock.id
+            ? { ...b, text: label, icon, color, isVisible }
+            : b,
         ),
       );
     } else {
@@ -82,6 +89,7 @@ export function BlockPage() {
         text: label || "Новый раздел",
         icon,
         color,
+        isVisible,
       };
       setSubBlocks((prev) => [...prev, newBlock]);
     }
@@ -115,10 +123,10 @@ export function BlockPage() {
       {/* Block Title */}
       <div className="flex flex-col items-start font-sans my-4">
         <div className="flex flex-row items-center justify-between w-full font-medium">
-          <h1 className="text-[#36F79A] leading-7 text-[26px] ">
+          <h1 className="text-[#3BCBFF] leading-7 text-[26px] ">
             Вино: основы и регионы
           </h1>
-          <span className="text-[#36F79A] text-[28px] ">0/{5 * 4}</span>
+          <span className="text-[#3BCBFF] text-[28px] ">0/{5 * 4}</span>
         </div>
         <p className="py-4 text-balance ">
           Пройдите практические задания по основным сортам винограда, видам
@@ -138,7 +146,7 @@ export function BlockPage() {
               <div key={block.id} className="relative">
                 <Link
                   href="/practice"
-                  className="py-8 w-full flex flex-col items-center justify-center gap-1 hover:bg-[#36F79A] hover:text-neutral-800 bg-neutral-800 rounded-4xl transition active:scale-95"
+                  className="py-8 w-full flex flex-col items-center justify-center gap-1 hover:bg-[#3BCBFF] hover:text-neutral-800 bg-neutral-800 rounded-4xl transition active:scale-95"
                 >
                   <IconComponent
                     className="size-8"
@@ -166,7 +174,7 @@ export function BlockPage() {
                 setEditingBlock(null);
                 setShowEditModal(true);
               }}
-              className="py-8 w-full flex flex-col items-center justify-center gap-1 border border-[#36F79A] text-[#36F79A] rounded-4xl transition active:scale-95 hover:bg-neutral-700"
+              className="py-8 w-full flex flex-col items-center justify-center gap-1 border border-[#3BCBFF] text-[#3BCBFF] rounded-4xl transition active:scale-95 hover:bg-neutral-700"
             >
               <span className="size-8 flex items-center justify-center rounded-full font-bold text-2xl">
                 +
@@ -202,7 +210,8 @@ export function BlockPage() {
         title={editingBlock ? "Изменить раздел" : "Добавить раздел"}
         initialLabel={editingBlock?.text || ""}
         initialIcon={editingBlock?.icon || "AcademicCapIcon"}
-        initialColor={editingBlock?.color || "#36F79A"}
+        initialColor={editingBlock?.color || "#3BCBFF"}
+        initialIsVisible={editingBlock?.isVisible}
         onSave={handleSaveBlock}
         onDelete={editingBlock ? handleDeleteBlock : undefined}
       />

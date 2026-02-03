@@ -1,11 +1,12 @@
 "use client";
 
 import { PencilSquareIcon, UserCircleIcon } from "@heroicons/react/24/outline";
-import { useAtomValue } from "jotai";
-import { Link } from "next-view-transitions";
+import { useAtom, useAtomValue } from "jotai";
+import { Link, useTransitionRouter } from "next-view-transitions";
 import { useMemo, useState } from "react";
 
-import { DEFAULT_BLOCKS, MOCK_LEADERBOARD } from "@/shared/constants";
+import { MOCK_LEADERBOARD } from "@/shared/constants";
+import { blocksAtom } from "@/shared/model/blocks";
 import { userAtom } from "@/shared/model/telegram-store";
 import { Modal } from "@/shared/ui/organisms/Modal";
 
@@ -23,6 +24,7 @@ import { UserProgress } from "@/widgets/user-progress";
  * @description Main page with leaderboard, user progress, and block grid
  */
 export function HomePage() {
+  const router = useTransitionRouter();
   const currentUserId = "me";
   const user = useAtomValue(userAtom);
 
@@ -99,39 +101,39 @@ export function HomePage() {
   const [viewModeEdit, setViewModeEdit] = useState(false);
   const [viewBoxCurrentModalEdit, setViewBoxCurrentModalEdit] = useState(false);
 
-  // Blocks state
-  const [blocks, setBlocks] = useState<BlockLabel[]>(DEFAULT_BLOCKS);
-  const [editingBlock, setEditingBlock] = useState<BlockLabel | null>(null);
-  const [showEditModal, setShowEditModal] = useState(false);
+  // Blocks state from atom
+  const [blocks, setBlocks] = useAtom(blocksAtom);
+
+  // Only for creating new blocks
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleEditBlock = (block: BlockLabel) => {
-    setEditingBlock(block);
-    setShowEditModal(true);
-  };
-
-  const handleSaveBlock = (label: string, icon: string, color: string) => {
-    if (editingBlock) {
-      setBlocks((prev) =>
-        prev.map((b) =>
-          b.id === editingBlock.id ? { ...b, text: label, icon, color } : b,
-        ),
-      );
+    if (viewModeEdit) {
+      router.push(`/editor/${block.id}`);
     } else {
-      const newBlock: BlockLabel = {
-        id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
-        text: label || "Новый блок",
-        icon,
-        color,
-      };
-      setBlocks((prev) => [...prev, newBlock]);
+      router.push(`/block?id=${block.id}`);
     }
   };
 
-  const handleDeleteBlock = () => {
-    if (editingBlock) {
-      setBlocks((prev) => prev.filter((b) => b.id !== editingBlock.id));
-    }
+  const handleAddBlock = (
+    label: string,
+    icon: string,
+    color: string,
+    isVisible: boolean,
+  ) => {
+    const newBlock: BlockLabel = {
+      id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+      text: label || "Новый блок",
+      icon,
+      color,
+      isVisible,
+    };
+    setBlocks((prev) => [...prev, newBlock]);
   };
+
+  const visibleBlocks = useMemo(() => {
+    return viewModeEdit ? blocks : blocks.filter((b) => b.isVisible !== false);
+  }, [blocks, viewModeEdit]);
 
   return (
     <div className="w-full max-w-[768px] mx-auto min-h-screen px-4 py-6 flex flex-col gap-6 relative">
@@ -198,12 +200,11 @@ export function HomePage() {
 
       {/* BLOCK GRID */}
       <BlockGrid
-        blocks={blocks}
+        blocks={visibleBlocks}
         editMode={viewModeEdit}
         onEditBlock={handleEditBlock}
         onAddBlock={() => {
-          setEditingBlock(null);
-          setShowEditModal(true);
+          setShowAddModal(true);
         }}
       />
 
@@ -248,21 +249,12 @@ export function HomePage() {
         </div>
       </Modal>
 
-      {/* Label Edit Modal */}
+      {/* Label Edit Modal (Add only) */}
       <LabelEditModal
-        isOpen={showEditModal}
-        onClose={() => {
-          setShowEditModal(false);
-          setEditingBlock(null);
-        }}
-        title={
-          editingBlock ? "Изменить блок %% NAME %%" : "Добавить блок обучения"
-        }
-        initialLabel={editingBlock?.text || ""}
-        initialIcon={editingBlock?.icon || "AcademicCapIcon"}
-        initialColor={editingBlock?.color || "#3BCBFF"}
-        onSave={handleSaveBlock}
-        onDelete={editingBlock ? handleDeleteBlock : undefined}
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        title="Добавить блок обучения"
+        onSave={handleAddBlock}
       />
     </div>
   );

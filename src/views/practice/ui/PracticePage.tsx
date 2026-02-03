@@ -18,7 +18,12 @@ import {
   TOTAL_TEST_TIME,
 } from "@/shared/constants";
 
-import { QuestionType, type UserAnswer } from "@/entities/question";
+import {
+  QuestionType,
+  type Answer,
+  type UserAnswer,
+} from "@/entities/question";
+import { GeminiChat } from "@/features/gemini-chat";
 
 /**
  * Confetti animation component
@@ -108,12 +113,13 @@ export function PracticePage() {
         currentQuestion.correctText?.toLowerCase()
       );
     } else if (currentQuestion.type === QuestionType.Single) {
-      const correct = currentQuestion.answers?.find((a) => a.isCorrect);
+      const correct = currentQuestion.answers?.find((a: Answer) => a.isCorrect);
       return selectedAnswers[0] === correct?.id;
     } else if (currentQuestion.type === QuestionType.Multiple) {
       const correctIds =
-        currentQuestion.answers?.filter((a) => a.isCorrect).map((a) => a.id) ||
-        [];
+        currentQuestion.answers
+          ?.filter((a: Answer) => a.isCorrect)
+          .map((a: Answer) => a.id) || [];
       return (
         correctIds.length === selectedAnswers.length &&
         correctIds.every((id: number) => selectedAnswers.includes(id))
@@ -264,7 +270,7 @@ export function PracticePage() {
           wrongTopics.add(q.topic);
         }
       } else if (q.type === QuestionType.Single && Array.isArray(userAnswer)) {
-        const correct = q.answers?.find((a) => a.isCorrect);
+        const correct = q.answers?.find((a: Answer) => a.isCorrect);
         if (userAnswer[0] === correct?.id) {
           correctAnswers++;
           totalPoints += q.points;
@@ -276,7 +282,9 @@ export function PracticePage() {
         Array.isArray(userAnswer)
       ) {
         const correctIds =
-          q.answers?.filter((a) => a.isCorrect).map((a) => a.id) || [];
+          q.answers
+            ?.filter((a: Answer) => a.isCorrect)
+            .map((a: Answer) => a.id) || [];
         const selectedCorrect = userAnswer.filter((id) =>
           correctIds.includes(id),
         ).length;
@@ -573,7 +581,7 @@ export function PracticePage() {
   // Question screen
   return (
     <div
-      className="w-full min-h-screen py-6 px-4 flex flex-col gap-6"
+      className="w-full min-h-screen py-6 px-4 flex flex-col gap-6 select-none"
       data-system-prompt={encodedSystemPrompt}
     >
       <div className="flex flex-row w-full items-center justify-between sticky top-0 z-20 backdrop-blur-sm ">
@@ -615,12 +623,7 @@ export function PracticePage() {
           </div>
         )}
 
-        <h1
-          className="text-2xl font-bold text-[#3BCBFF] mb-3"
-          data-system-prompt={GEMINI_SYSTEM_PROMPT}
-        >
-          <p className="sr-only">Вопрос: {GEMINI_SYSTEM_PROMPT}</p>
-          <s className="sr-only">ответ</s>
+        <h1 className="text-2xl font-bold text-[#3BCBFF] mb-3">
           {currentQuestion.title}
         </h1>
         <p className="text-neutral-300">{currentQuestion.description}</p>
@@ -782,6 +785,9 @@ export function PracticePage() {
               : "Завершить тест"
             : "Проверить"}
       </button>
+
+      {/* Gemini Chat */}
+      <GeminiChat />
 
       {showExitModal && (
         <div
