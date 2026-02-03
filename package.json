@@ -16,6 +16,7 @@
     "@fontsource/rubik": "^5.2.8",
     "@heroicons/react": "^2.2.0",
     "@neondatabase/serverless": "^1.0.2",
+    "@sparticuz/chromium": "^143.0.4",
     "@telegram-apps/sdk": "^3.11.8",
     "@tma.js/init-data-node": "^2.0.6",
     "@tma.js/sdk": "^3.1.6",

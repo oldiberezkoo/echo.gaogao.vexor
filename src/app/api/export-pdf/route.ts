@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import chromium from "chrom e-aws-lambda";
+import chromium from "chrome-aws-lambda";
 import puppeteer from "puppeteer-core";
 
 const browser = await puppeteer.launch({
