@@ -10,7 +10,8 @@ export const TOTAL_TEST_TIME = 1;
 
 /** Source domain for PDF export */
 export const PDF_SOURCE_DOMAIN = "vexor.gaogao.inside.net";
-
+export const DEVELOPMENT_MODE: boolean =
+  Boolean(process.env.DEVELOPMENT_MODE) || true;
 /** Branding */
 export { default as FaviconPNG } from "../brading/favicon.png";
 export { default as FaviconSVG } from "../brading/favicon.svg";

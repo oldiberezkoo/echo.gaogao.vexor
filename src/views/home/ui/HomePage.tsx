@@ -3,9 +3,9 @@
 import { PencilSquareIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { useAtom, useAtomValue } from "jotai";
 import { Link, useTransitionRouter } from "next-view-transitions";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { MOCK_LEADERBOARD } from "@/shared/constants";
+import { MOCK_LEADERBOARD, MOCK_USER_DATA } from "@/shared/constants";
 import { blocksAtom } from "@/shared/model/blocks";
 import { userAtom } from "@/shared/model/telegram-store";
 import { Modal } from "@/shared/ui/organisms/Modal";
@@ -15,6 +15,7 @@ import type { LeaderboardEntry } from "@/entities/user";
 
 import { LabelEditModal } from "@/features/label-edit";
 
+import { viewEditModeStore } from "@/features/viewEditMode/storage/localforage";
 import { BlockGrid } from "@/widgets/block-grid";
 import { Leaderboard, TopThree } from "@/widgets/leaderboard";
 import { UserProgress } from "@/widgets/user-progress";
@@ -43,10 +44,9 @@ export function HomePage() {
     }
     return {
       id: "me",
-      name: "Вы",
-      avatarText: "ВЫ",
-      avatarUrl:
-        "https://cdn4.telesco.pe/file/nW3q8DT8mU3MxAOHK5AMSQo1mvVUwqTBfvVV5RyACnyCLwuwjj5XL_ygbj-JNAx3vjQuTDddWDGw6zhhS5aezhPAOU5-B4nnhGRpEt7otS1-zijT2_pMIT053H_oMjO1VIw9O4NfoP1DbSXUfQsRFEju0Cmy2hdHcZcIuSGzfbNfh-tcw1Z67k8r4lDCewIqUAW4iYRN6nUEZAXr7p7zGZA2vKy-CjnyzVFGd2ptglDPO7oSeu4D9OttB3IEZC_HiShlsSZkPc3Tg11_nO1QQczx97O6OGZgCzQKMxpzHIvckalgwevEqSxK01sYQMUDkuXPX4XWDekgyn7YkbtTug.jpg",
+      name: MOCK_USER_DATA.firstName,
+      avatarText: MOCK_USER_DATA.username,
+      avatarUrl: MOCK_USER_DATA.avatar,
       points: 980,
     };
   }, [user]);
@@ -106,7 +106,19 @@ export function HomePage() {
 
   // Only for creating new blocks
   const [showAddModal, setShowAddModal] = useState(false);
+  useEffect(() => {
+    viewEditModeStore.get().then((mode) => {
+      if (mode) setViewModeEdit(mode.viewModeEdit);
+    });
+  }, []);
 
+  // Функция для переключения режима редактирования
+  const toggleEditMode = async () => {
+    const updated = await viewEditModeStore.update({
+      viewModeEdit: !viewModeEdit,
+    });
+    setViewModeEdit(updated.viewModeEdit);
+  };
   const handleEditBlock = (block: BlockLabel) => {
     if (viewModeEdit) {
       router.push(`/editor/${block.id}`);
@@ -168,7 +180,7 @@ export function HomePage() {
           </Link>
           <button
             className="p-2 rounded-full bg-neutral-800 xanimte duration-200 ease-in-out hover:bg-[#3BCBFF] group"
-            onClick={() => setViewModeEdit((prev) => !prev)}
+            onClick={toggleEditMode}
           >
             <PencilSquareIcon className="size-5 group-hover:group-hover:text-neutral-800" />
           </button>
