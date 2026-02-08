@@ -1,6 +1,0 @@
-import { ProfilePage } from "@/views/profile";
-
-// Alias for /p route
-export default function Page() {
-  return <ProfilePage />;
-}

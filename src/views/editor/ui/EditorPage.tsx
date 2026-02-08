@@ -26,6 +26,8 @@ export function EditorPage({ blockId }: EditorPageProps) {
 
   const block = blocks.find((b) => b.id === blockId);
   const questions = questionsMap[blockId] || [];
+console.log("blocks:", blocks);
+console.log("blockId:", blockId);
 
   const [showSettings, setShowSettings] = useState(false);
 

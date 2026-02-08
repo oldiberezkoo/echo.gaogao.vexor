@@ -4,6 +4,8 @@ import { Modal } from "@/shared/ui/organisms/Modal";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
+type UserRole = "admin" | "manager" | "user";
+
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -11,11 +13,13 @@ interface SettingsModalProps {
     firstName: string;
     lastName: string;
     position: string;
+    role: UserRole;
   };
   onSave: (data: {
     firstName: string;
     lastName: string;
     position: string;
+    role: UserRole;
   }) => void;
 }
 
@@ -28,17 +32,19 @@ export function SettingsModal({
   const [firstName, setFirstName] = useState(initialData.firstName);
   const [lastName, setLastName] = useState(initialData.lastName);
   const [position, setPosition] = useState(initialData.position);
+  const [role, setRole] = useState<UserRole>(initialData.role);
 
   useEffect(() => {
     if (isOpen) {
       setFirstName(initialData.firstName);
       setLastName(initialData.lastName);
       setPosition(initialData.position);
+      setRole(initialData.role);
     }
   }, [isOpen, initialData]);
 
   const handleSave = () => {
-    onSave({ firstName, lastName, position });
+    onSave({ firstName, lastName, position, role });
     onClose();
   };
 
@@ -61,7 +67,6 @@ export function SettingsModal({
           <div>
             <label className="block text-neutral-400 text-sm mb-1.5">Имя</label>
             <input
-              type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="w-full bg-neutral-900 text-white px-4 py-3 rounded-xl outline-none focus:ring-1 focus:ring-[#3BCBFF]"
@@ -73,7 +78,6 @@ export function SettingsModal({
               Фамилия
             </label>
             <input
-              type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               className="w-full bg-neutral-900 text-white px-4 py-3 rounded-xl outline-none focus:ring-1 focus:ring-[#3BCBFF]"
@@ -85,11 +89,25 @@ export function SettingsModal({
               Должность
             </label>
             <input
-              type="text"
               value={position}
               onChange={(e) => setPosition(e.target.value)}
               className="w-full bg-neutral-900 text-white px-4 py-3 rounded-xl outline-none focus:ring-1 focus:ring-[#3BCBFF]"
             />
+          </div>
+
+          <div>
+            <label className="block text-neutral-400 text-sm mb-1.5">
+              Роль
+            </label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value as UserRole)}
+              className="w-full bg-neutral-900 text-white px-4 py-3 rounded-xl outline-none focus:ring-1 focus:ring-[#3BCBFF]"
+            >
+              <option value="admin">Администратор</option>
+              <option value="manager">Менеджер</option>
+              <option value="user">Пользователь</option>
+            </select>
           </div>
         </div>
 

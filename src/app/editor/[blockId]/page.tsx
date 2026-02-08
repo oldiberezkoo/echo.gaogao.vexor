@@ -1,5 +1,11 @@
 import { EditorPage } from "@/views/editor";
 
-export default function Page({ params }: { params: { blockId: string } }) {
-  return <EditorPage blockId={params.blockId} />;
+interface PageProps {
+  params: Promise<{ blockId: string }>;
+}
+
+export default async function Page({ params }: PageProps) {
+  const { blockId } = await params;
+
+  return <EditorPage blockId={blockId} />;
 }

@@ -22,6 +22,7 @@ import {
   KNOWLEDGE_BLOCKS,
   MOCK_USER_DATA,
   PDF_SOURCE_DOMAIN,
+  QUIZ_LOGS_USER,
 } from "@/shared/constants";
 
 import { downloadProfilePdf } from "@/features/pdf-export";
@@ -29,175 +30,6 @@ import { SettingsModal } from "@/features/user-settings";
 import { ActivityChart, DoughnutChart } from "@/widgets/charts";
 
 // Mock data for quiz logs - replace with actual data from your backend
-const QUIZ_LOGS = [
-  {
-    id: 1,
-    quizTitle: "Сертификация сомелье: Вина Франции",
-    instructor: "Дюпон Жан-Пьер",
-    date: "16 Мая 2024",
-    time: "14:30",
-    score: 87,
-    maxScore: 100,
-    duration: 2145, // seconds
-    avgTimePerQuestion: 107, // seconds
-    answers: [
-      {
-        question: "Какой регион Франции известен производством Шабли?",
-        userAnswer: "Бургундия",
-        correctAnswer: "Бургундия",
-        isCorrect: true,
-      },
-      {
-        question: "Основной сорт винограда для производства Шампанского?",
-        userAnswer: "Пино Нуар",
-        correctAnswer: "Шардоне, Пино Нуар, Пино Менье",
-        isCorrect: false,
-      },
-      {
-        question: "При какой температуре подавать Божоле Нуво?",
-        userAnswer: "12-14°C",
-        correctAnswer: "12-14°C",
-        isCorrect: true,
-      },
-      {
-        question: "Что означает термин 'Sur Lie' в виноделии?",
-        userAnswer: "Выдержка на осадке",
-        correctAnswer: "Выдержка на осадке",
-        isCorrect: true,
-      },
-      {
-        question: "Минимальная выдержка для Бордо Grand Cru?",
-        userAnswer: "12 месяцев",
-        correctAnswer: "18 месяцев",
-        isCorrect: false,
-      },
-    ],
-  },
-  {
-    id: 2,
-    quizTitle: "Барменское дело: Классические коктейли",
-    instructor: "Иванов Алексей",
-    date: "3 Мая 2024",
-    time: "10:15",
-    score: 92,
-    maxScore: 100,
-    duration: 1680,
-    avgTimePerQuestion: 84,
-    answers: [
-      {
-        question: "Из каких ингредиентов состоит коктейль Негрони?",
-        userAnswer: "Джин, Кампари, Вермут",
-        correctAnswer: "Джин, Кампари, Вермут",
-        isCorrect: true,
-      },
-      {
-        question: "Какой метод приготовления используется для Мохито?",
-        userAnswer: "Билд (Build)",
-        correctAnswer: "Мадл (Muddle) + Билд",
-        isCorrect: false,
-      },
-      {
-        question: "Основа коктейля Old Fashioned?",
-        userAnswer: "Бурбон или Рай виски",
-        correctAnswer: "Бурбон или Рай виски",
-        isCorrect: true,
-      },
-      {
-        question: "Какой гарнир используется в Мартини?",
-        userAnswer: "Оливка или лимонная цедра",
-        correctAnswer: "Оливка или лимонная цедра",
-        isCorrect: true,
-      },
-    ],
-  },
-  {
-    id: 3,
-    quizTitle: "Дегустация виски: Скотч и Бурбон",
-    instructor: "Макдональд Дункан",
-    date: "20 Апреля 2024",
-    time: "16:00",
-    score: 78,
-    maxScore: 100,
-    duration: 2520,
-    avgTimePerQuestion: 126,
-    answers: [
-      {
-        question: "В чем основное отличие производства скотча от бурбона?",
-        userAnswer: "Использование ячменного солода",
-        correctAnswer: "Использование ячменного солода и торфа для скотча",
-        isCorrect: true,
-      },
-      {
-        question: "Минимальная выдержка для виски в Шотландии?",
-        userAnswer: "5 лет",
-        correctAnswer: "3 года",
-        isCorrect: false,
-      },
-      {
-        question: "Какой регион Шотландии известен торфяным скотчем?",
-        userAnswer: "Айла (Islay)",
-        correctAnswer: "Айла (Islay)",
-        isCorrect: true,
-      },
-    ],
-  },
-  {
-    id: 4,
-    quizTitle: "Крафтовое пивоварение: Стили и технологии",
-    instructor: "Смирнов Дмитрий",
-    date: "8 Апреля 2024",
-    time: "12:00",
-    score: 85,
-    maxScore: 100,
-    duration: 1920,
-    avgTimePerQuestion: 96,
-    answers: [
-      {
-        question: "Что характеризует стиль IPA (India Pale Ale)?",
-        userAnswer: "Высокая горечь и хмелевой аромат",
-        correctAnswer: "Высокая горечь и хмелевой аромат",
-        isCorrect: true,
-      },
-      {
-        question: "Какая температура ферментации для лагера?",
-        userAnswer: "8-12°C",
-        correctAnswer: "8-12°C",
-        isCorrect: true,
-      },
-      {
-        question: "Что такое 'сухое охмеление' (dry hopping)?",
-        userAnswer: "Добавление хмеля во время брожения",
-        correctAnswer: "Добавление хмеля после основной ферментации",
-        isCorrect: false,
-      },
-    ],
-  },
-  {
-    id: 5,
-    quizTitle: "Винная сервировка и этикет",
-    instructor: "Лебедева Ольга",
-    date: "25 Марта 2024",
-    time: "15:30",
-    score: 94,
-    maxScore: 100,
-    duration: 1440,
-    avgTimePerQuestion: 72,
-    answers: [
-      {
-        question: "В каком порядке подавать вина при дегустации?",
-        userAnswer: "От легких к насыщенным, от сухих к сладким",
-        correctAnswer: "От легких к насыщенным, от сухих к сладким",
-        isCorrect: true,
-      },
-      {
-        question: "Оптимальная температура для подачи красного вина?",
-        userAnswer: "16-18°C",
-        correctAnswer: "16-18°C",
-        isCorrect: true,
-      },
-    ],
-  },
-];
 
 interface QuizLog {
   id: number;
@@ -271,7 +103,7 @@ function QuizDetailsModal({ quiz, onClose }: QuizDetailsModalProps) {
 
         {/* Stats */}
         <div className="p-6 border-b border-neutral-800">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-neutral-800 rounded-2xl p-4">
               <p className="text-neutral-400 text-xs mb-1">Баллы</p>
               <p className="text-white text-2xl font-bold">
@@ -301,10 +133,7 @@ function QuizDetailsModal({ quiz, onClose }: QuizDetailsModalProps) {
               <p className="text-neutral-400 text-xs mb-1">Вопросов</p>
               <p className="text-white text-2xl font-bold">{quiz.maxScore}</p>
             </div>
-            <div className="bg-neutral-800 rounded-2xl p-4">
-              <p className="text-neutral-400 text-xs mb-1">Правильных отве</p>
-              <p className="text-white text-2xl font-bold">{quiz.maxScore}</p>
-            </div>
+  
           </div>
         </div>
 
@@ -737,7 +566,7 @@ export function ProfilePage() {
               </h3>
 
               <div className="space-y-3">
-                {QUIZ_LOGS.map((quiz) => {
+                {QUIZ_LOGS_USER.map((quiz) => {
                   const percentage = Math.round(
                     (quiz.score / quiz.maxScore) * 100,
                   );
@@ -758,7 +587,7 @@ export function ProfilePage() {
                           </p>
                         </div>
 
-                        <div className="text-right flex-shrink-0">
+                        <div className="text-right flex-0">
                           <div className="flex items-center gap-1.5">
                             <span className="text-[#3BCBFF] font-bold text-lg">
                               {quiz.score}
