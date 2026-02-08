@@ -96,6 +96,18 @@ export function SettingsModal({
           </div>
 
           <div>
+            <label className="block text-neutral-400 text-sm mb-1.5 ">
+              Стаж
+              <span className="text-neutral-500 text-xs mx-2">Введите дату начала работы</span>
+            </label>
+            <input
+              type="date"
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+              className="w-full bg-neutral-900 text-white px-4 py-3 rounded-xl outline-none focus:ring-1 focus:ring-[#3BCBFF]"
+            />
+          </div>
+          <div>
             <label className="block text-neutral-400 text-sm mb-1.5">
               Роль
             </label>

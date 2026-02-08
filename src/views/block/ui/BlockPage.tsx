@@ -184,20 +184,7 @@ export function BlockPage() {
           )}
         </div>
 
-        {/* Practice Errors Section */}
-        <Link
-          href="/practice"
-          prefetch={false}
-          className="py-8 px-4 w-full flex flex-col items-start justify-start gap-1 bg-[#50EBFF] text-neutral-800 rounded-4xl transition active:scale-95 "
-        >
-          <h1 className="font-sans font-medium text-[15px] mb-2">
-            Практика ошибок: (5)
-          </h1>
-          <p className="text-[14px]">
-            Практикуйте больше те задания, которые у вас хуже всего. <br /> Вы
-            справитесь!
-          </p>
-        </Link>
+
       </div>
 
       {/* Label Edit Modal */}

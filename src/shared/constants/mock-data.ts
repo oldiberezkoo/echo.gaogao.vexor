@@ -105,7 +105,7 @@ export const MOCK_USER_DATA: UserProfile = {
   username: "oldiberezko",
   lastName: "",
   avatar:
-    "https://k7rxwdfegh.ufs.sh/f/iPXDxxHekoTcJKtzarWjtobF20URQNYih8Tl97g1IDw36rKG",
+    "https://k7rxwdfegh.ufs.sh/f/iPXDxxHekoTcRoHyKxbl1aUkSvCHWKcT7oPsu9yD6FfYg2Nx",
   status: "*̷* Его надо запомнить.",
   position: "gaogao.inside.dev",
   experience: "4 года 3 месяца",
