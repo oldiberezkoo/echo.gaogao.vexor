@@ -14,11 +14,15 @@ interface LabelEditModalProps {
   onClose: () => void;
   title?: string;
   initialLabel?: string;
+  initialDescription?: string;
+  initialTopicLink?: string;
   initialIcon?: string;
   initialColor?: string;
   initialIsVisible?: boolean;
   onSave?: (
     label: string,
+    description: string,
+    topicLink: string,
     icon: string,
     color: string,
     isVisible: boolean,
@@ -43,6 +47,8 @@ export function LabelEditModal({
   onClose,
   title = "Изменить Label",
   initialLabel = "",
+  initialDescription = "",
+  initialTopicLink = "",
   initialIcon = "AcademicCapIcon",
   initialColor = "#3BCBFF",
   initialIsVisible = true,
@@ -50,6 +56,8 @@ export function LabelEditModal({
   onDelete,
 }: LabelEditModalProps) {
   const [label, setLabel] = useState(initialLabel);
+  const [description, setDescription] = useState(initialDescription);
+  const [topicLink, setTopicLink] = useState(initialTopicLink);
   const [selectedIcon, setSelectedIcon] = useState(initialIcon);
   const [selectedColor, setSelectedColor] = useState(initialColor);
   const [isVisible, setIsVisible] = useState(initialIsVisible);
@@ -59,16 +67,33 @@ export function LabelEditModal({
   useEffect(() => {
     if (isOpen) {
       setLabel(initialLabel);
+      setDescription(initialDescription);
+      setTopicLink(initialTopicLink);
       setSelectedIcon(initialIcon);
       setSelectedColor(initialColor);
       setCustomColor(initialColor);
       setIsVisible(initialIsVisible);
       setShowIconPicker(false);
     }
-  }, [isOpen, initialLabel, initialIcon, initialColor, initialIsVisible]);
+  }, [
+    isOpen,
+    initialLabel,
+    initialDescription,
+    initialTopicLink,
+    initialIcon,
+    initialColor,
+    initialIsVisible,
+  ]);
 
   const handleSave = () => {
-    onSave?.(label, selectedIcon, selectedColor, isVisible);
+    onSave?.(
+      label,
+      description,
+      topicLink,
+      selectedIcon,
+      selectedColor,
+      isVisible,
+    );
     onClose();
   };
 
@@ -79,6 +104,8 @@ export function LabelEditModal({
 
   const handleCancel = () => {
     setLabel(initialLabel);
+    setDescription(initialDescription);
+    setTopicLink(initialTopicLink);
     setSelectedIcon(initialIcon);
     setSelectedColor(initialColor);
     setCustomColor(initialColor);
@@ -135,6 +162,32 @@ export function LabelEditModal({
               onChange={(e) => setLabel(e.target.value)}
               className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-2xl text-white placeholder-neutral-500 focus:outline-none focus:border-[#3BCBFF] transition-colors"
               placeholder="Введите название"
+            />
+          </div>
+
+          {/* Description field */}
+          <div className="space-y-2 mb-6">
+            <label className="text-sm text-neutral-400">Описание блока</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-2xl text-white placeholder-neutral-500 focus:outline-none focus:border-[#3BCBFF] transition-colors resize-none"
+              placeholder="Описание блока, которое увидят пользователи"
+              rows={3}
+            />
+          </div>
+
+          {/* Topic Link */}
+          <div className="space-y-2 mb-6">
+            <label className="text-sm text-neutral-400">
+              Ссылка на материалы
+            </label>
+            <input
+              type="text"
+              value={topicLink}
+              onChange={(e) => setTopicLink(e.target.value)}
+              className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-2xl text-white placeholder-neutral-500 focus:outline-none focus:border-[#3BCBFF] transition-colors"
+              placeholder="https://..."
             />
           </div>
 
